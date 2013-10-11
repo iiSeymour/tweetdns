@@ -5,6 +5,7 @@ import os
 import sys
 import time
 import urllib2
+import settings
 from daemon import Daemon
 from twitter import oauth_dance, read_token_file, OAuth, Twitter
 
@@ -13,13 +14,12 @@ class ExternalIP(object):
 
     def __init__(self):
         self.address = None
-        self.address_site = "http://canihazip.com/s"
 
     def getAddress(self):
         '''
         Get external IP address
         '''
-        return urllib2.urlopen(self.address_site).read()
+        return urllib2.urlopen(settings.site).read()
 
     def newAddress(self):
         '''
@@ -36,11 +36,12 @@ class Tweeter(object):
 
     def __init__(self):
 
-        CONSUMER_KEY = None
-        CONSUMER_SECRET = None
+        CONSUMER_KEY = settings.consumer_key
+        CONSUMER_SECRET = settings.consumer_secret
 
         if not (CONSUMER_KEY and CONSUMER_SECRET):
-            raise Exception("Whoa! Fill in your keys first!")
+            print "Whoa! Fill in your keys in settings.py first!"
+            sys.exit(1)
 
         TWITTER_CREDS = os.path.expanduser('~/.tweetdns')
 
@@ -67,11 +68,14 @@ class TweetDNSDaemon(Daemon):
         self.tweet = tweeter()
 
     def run(self):
+
         ip = ExternalIP()
         while True:
             if ip.newAddress():
                 self.tweet.tweet("New IP %s" % ip.address)
-            time.sleep(3600)
+            else:
+                print "IP ain't changed boy!"
+            time.sleep(settings.seconds)
 
 
 def main():
