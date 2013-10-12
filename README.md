@@ -1,8 +1,8 @@
-### tweetdns
+### Tweetdns
 
 A python service that tweets when your dynamic IP changes.
 
-### dependencies
+### Dependencies
 
 Python twitter API https://github.com/sixohsix/twitter
 
@@ -14,6 +14,6 @@ Python twitter API https://github.com/sixohsix/twitter
  - Make account private [optional]
  - Register account with https://dev.twitter.com/
  - Create new application to get a Consumer Key and Secret
- - Add Key and Secret to Tweeter class in tweetdns.py
+ - Add Key and Secret in settings.py
  - Start daemon `./tweetdns start`
  - Follow your new twitter account to get updates when your IP changes
