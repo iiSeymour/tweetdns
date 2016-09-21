@@ -2,6 +2,10 @@
 # Settings for tweetdns #
 #########################
 
+# Twitter account to direct message on IP change
+
+user = None
+
 # Provide your consumer key and secret for the
 # twitter account you want to tweet you IP from
 
